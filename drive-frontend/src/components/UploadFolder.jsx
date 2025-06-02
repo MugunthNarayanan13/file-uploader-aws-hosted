@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { PiMinusCircleFill } from "react-icons/pi";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { MdError } from "react-icons/md";
+import axios from "axios";
+import serverURL from "../serverURL";
+axios.defaults.baseURL = serverURL;
 
 export default function UploadFolder() {
   const [files, setFiles] = useState([]);
@@ -37,7 +39,7 @@ export default function UploadFolder() {
         formData.append("path", file.webkitRelativePath.replace(file.name, ""));
         formData.append("files", file, file.name);
 
-        await axios.post("http://localhost:8003/upload", formData, {
+        await axios.post("/upload", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
       }
